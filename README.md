@@ -7,7 +7,7 @@
 
 # Jasmine
 
-Jasmine is a Revolt bot written in Javascript developed by Mirabellier just for fun. 🍄<br>Containing over 100+ commands from different categories (soon). 🌼
+Jasmine is a Revolt bot written in Typescript developed by Mirabellier just for fun. 🍄<br>Containing over 100+ commands from different categories (soon). 🌼
 
 ## ❤️ About
 
