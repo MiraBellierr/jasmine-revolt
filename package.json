@@ -1,0 +1,31 @@
+{
+  "name": "jasmine-revolt",
+  "version": "1.0.0",
+  "description": "A Revolt bot",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsc -p . && node dist/index.js",
+    "build": "tsc -p .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "revolt-bot"
+  ],
+  "author": "Mira",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/collection": "^1.5.1",
+    "ascii-table": "^0.0.9",
+    "axios": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "revolt.js": "^7.0.0-beta.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4",
+    "ts-node": "^10.0.0",
+    "@types/node": "^16.11.15"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
