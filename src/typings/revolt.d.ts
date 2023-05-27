@@ -8,6 +8,7 @@ declare module "revolt.js" {
 		on(arg0: string, arg1: (...args: any[]) => any): void;
 		user: undefined | User;
 		aliases: any;
+		servers: ServerCollection;
 		constructor();
 	}
 
@@ -1668,6 +1669,146 @@ declare module "revolt.js" {
 						type: "Group";
 				  }
 		): ChannelInvite;
+	}
+
+	export class ServerCollection {
+		constructor();
+		client: Client;
+		create(
+			id: string,
+			type:
+				| "channel"
+				| "user"
+				| "server"
+				| "bot"
+				| "channelUnread"
+				| "emoji"
+				| "message"
+				| "serverMember"
+				| "session",
+			instance: Server,
+			context: unknown,
+			data?: unknown
+		): void;
+		createServer(data: {
+			description?: null | string;
+			name: string;
+			nsfw?: null | boolean;
+		}): Promise<Server>;
+		delete(id: string): void;
+		entries(): IterableIterator<[string, Server]>;
+		fetch(id: string): Promise<Server>;
+		filter(predicate: (value: Server, key: string) => boolean): Server[];
+		find(
+			predicate: (value: Server, key: string) => boolean
+		): undefined | Server;
+		forEach(
+			cb: (value: Server, key: string, map: Map<string, Server>) => void
+		): void;
+		get(id: string): undefined | Server;
+		getOrCreate(
+			id: string,
+			data: {
+				_id: string;
+				analytics?: boolean;
+				banner?: null | {
+					_id: string;
+					content_type: string;
+					deleted?: null | boolean;
+					filename: string;
+					message_id?: null | string;
+					metadata:
+						| {
+								type: "File";
+						  }
+						| {
+								type: "Text";
+						  }
+						| {
+								height: number;
+								type: "Image";
+								width: number;
+						  }
+						| {
+								height: number;
+								type: "Video";
+								width: number;
+						  }
+						| {
+								type: "Audio";
+						  };
+					object_id?: null | string;
+					reported?: null | boolean;
+					server_id?: null | string;
+					size: number;
+					tag: string;
+					user_id?: null | string;
+				};
+				categories?:
+					| null
+					| {
+							channels: string[];
+							id: string;
+							title: string;
+					  }[];
+				channels: string[];
+				default_permissions: number;
+				description?: null | string;
+				discoverable?: boolean;
+				flags?: null | number;
+				icon?: null | {
+					_id: string;
+					content_type: string;
+					deleted?: null | boolean;
+					filename: string;
+					message_id?: null | string;
+					metadata:
+						| {
+								type: "File";
+						  }
+						| {
+								type: "Text";
+						  }
+						| {
+								height: number;
+								type: "Image";
+								width: number;
+						  }
+						| {
+								height: number;
+								type: "Video";
+								width: number;
+						  }
+						| {
+								type: "Audio";
+						  };
+					object_id?: null | string;
+					reported?: null | boolean;
+					server_id?: null | string;
+					size: number;
+					tag: string;
+					user_id?: null | string;
+				};
+				name: string;
+				nsfw?: boolean;
+				owner: string;
+				system_messages?: null | {
+					user_banned?: null | string;
+					user_joined?: null | string;
+					user_kicked?: null | string;
+					user_left?: null | string;
+				};
+			},
+			isNew?: boolean
+		): Server;
+		getOrPartial(id: string): undefined | Server;
+		has(id: string): boolean;
+		isPartial(id: string): boolean;
+		keys(): IterableIterator<string>;
+		map<O>(cb: (value: Server, key: string) => O): O[];
+		size(): number;
+		toList(): Server[];
+		values(): IterableIterator<Server>;
 	}
 
 	enum UserBadges {
