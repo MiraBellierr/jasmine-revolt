@@ -11,7 +11,7 @@ Jasmine is a Revolt bot written in Typescript developed by Mirabellier just for 
 
 ## ❤️ About
 
-Jasmine is a simple RPG Discord bot ⚔️ developed by Mirabellier for fun. You can invite it to your Revolt server by clicking [this link](https://app.revolt.chat/bot/01H1D78A8NZ6RKA4NZYWJS4B0P)! You can also join our Revolt server [Kawaii Paradise](https://rvlt.gg/FQqWfvQt) for all questions, suggestions, and assistance! It comes packaged with a variety of fun commands and utility commands that can be useful for your server.
+Jasmine is a simple RPG Revolt bot ⚔️ developed by Mirabellier for fun. You can invite it to your Revolt server by clicking [this link](https://app.revolt.chat/bot/01H1D78A8NZ6RKA4NZYWJS4B0P)! You can also join our Revolt server [Kawaii Paradise](https://rvlt.gg/FQqWfvQt) for all questions, suggestions, and assistance! It comes packaged with a variety of fun commands and utility commands that can be useful for your server.
 
 ## 🧡 Features
 
