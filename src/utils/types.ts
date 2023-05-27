@@ -12,18 +12,8 @@ export interface CharacterList {
 
 export interface Command {
 	name: string;
+	description: string;
+	category: string;
 	aliases?: string[];
 	run: (client: Client, message: Message, args: string[]) => void;
-}
-
-export interface Env {
-	TOKEN: string;
-	PREFIX: string;
-}
-
-export interface HandlerCollection {
-	commands: Collection<string, Command>;
-	aliases: Collection<string, Command>;
-	categories: string[];
-	characters: Collection<string, Character>;
 }
