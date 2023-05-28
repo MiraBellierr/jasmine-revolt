@@ -16,9 +16,8 @@ module.exports = async (client: Client, message: Message) => {
 		);
 	}
 
-	if (!message.content!.startsWith(prefix) || message.author!.bot) {
-		return;
-	}
+	if (!message.content) return;
+	if (!message.content.startsWith(prefix) || message.author!.bot) return;
 
 	const args = message.content!.slice(prefix.length).trim().split(/ +/g);
 	const cmd = args.shift()?.toLowerCase();
