@@ -27,10 +27,18 @@ function getAll(client: Client, message: Message) {
 			.map((cmd: Command) => `\`${cmd.name}\``);
 
 	client.categories.forEach((c: string) =>
-		byCategories.push(`> **${c}**\n> ${commands(c).join(", ")}`)
+		byCategories.push(`**${c}**\n${commands(c).join(", ")}`)
 	);
 
-	return message.reply(`### Jasmine Help Menu\n\n ${byCategories.join("\n")}`);
+	return message.reply({
+		embeds: [
+			{
+				title: "Jasmine Help Menu",
+				description: byCategories.join("\n"),
+				colour: "#FF00FF",
+			},
+		],
+	});
 }
 
 function getCMD(client: Client, message: Message, input: string) {
@@ -42,10 +50,17 @@ function getCMD(client: Client, message: Message, input: string) {
 
 	const fullText = new Array<string>();
 
-	if (cmd.name) fullText.push(`> **Command Name**: \`${cmd.name}\``);
-	if (cmd.description)
-		fullText.push(`> **Description**: \`${cmd.description}\``);
-	if (cmd.example) fullText.push(`> **Example**: \`${cmd.example}\``);
+	if (cmd.name) fullText.push(`**Command Name**: \`${cmd.name}\``);
+	if (cmd.description) fullText.push(`**Description**: \`${cmd.description}\``);
+	if (cmd.example) fullText.push(`**Example**: \`${cmd.example}\``);
 
-	return message.reply(`### Jasmine Help Menu\n\n ${fullText.join("\n")}`);
+	return message.reply({
+		embeds: [
+			{
+				title: `Help Menu for ${cmd.name}`,
+				description: fullText.join("\n"),
+				colour: "#FF00FF",
+			},
+		],
+	});
 }
