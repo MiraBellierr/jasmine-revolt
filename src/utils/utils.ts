@@ -1,5 +1,6 @@
 import axios from "axios";
 import https from "https";
+import Client from "revolt.js";
 
 const deleteElement = <T>(array: T[], element: T): T[] => {
 	const index = array.indexOf(element);
@@ -142,6 +143,41 @@ const asyncForEach = async <T>(
 	}
 };
 
+const convertToFile = async (client: Client, url: string, filename: string) => {
+	let urlRegex =
+		/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/gi;
+	const autumn = client.configuration?.features.autumn.url;
+
+	if (url.match(urlRegex)) {
+		const res = await fetch(url, { method: "GET" });
+		const blob = await res.blob();
+
+		const form = new FormData();
+		form.append("file", blob, filename);
+
+		const res2 = await fetch(`${autumn}/attachments`, {
+			method: "POST",
+			body: form,
+		});
+
+		const json = await res2.json();
+
+		return json.id;
+	} else {
+		const form = new FormData();
+		form.append("file", url, filename);
+
+		const res = await fetch(`${autumn}/attachments`, {
+			method: "POST",
+			body: form,
+		});
+
+		const json = await res.json();
+
+		return json.id;
+	}
+};
+
 export {
 	splitMessage,
 	formatDate,
@@ -151,4 +187,5 @@ export {
 	deleteElement,
 	getProgBar,
 	asyncForEach,
+	convertToFile,
 };

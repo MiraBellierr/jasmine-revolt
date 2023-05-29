@@ -9,6 +9,42 @@ declare module "revolt.js" {
 		user: undefined | User;
 		aliases: any;
 		servers: ServerCollection;
+		configuration:
+			| undefined
+			| {
+					app: string;
+					build: {
+						commit_sha: string;
+						commit_timestamp: string;
+						origin_url: string;
+						semver: string;
+						timestamp: string;
+					};
+					features: {
+						autumn: {
+							enabled: boolean;
+							url: string;
+						};
+						captcha: {
+							enabled: boolean;
+							key: string;
+						};
+						email: boolean;
+						invite_only: boolean;
+						january: {
+							enabled: boolean;
+							url: string;
+						};
+						voso: {
+							enabled: boolean;
+							url: string;
+							ws: string;
+						};
+					};
+					revolt: string;
+					vapid: string;
+					ws: string;
+			  };
 		constructor();
 	}
 
