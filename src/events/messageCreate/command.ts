@@ -36,8 +36,8 @@ module.exports = async (client: Client, message: Message) => {
 
 	try {
 		await command.run(client, message, args);
-	} catch (err) {
+	} catch (err: any) {
 		console.log(err);
-		message.reply("There was an error trying to execute this command.");
+		message.channel?.sendMessage(err.message);
 	}
 };

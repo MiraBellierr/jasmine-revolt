@@ -18,6 +18,15 @@ export interface Command {
 	run: (client: Client, message: Message, args: string[]) => void;
 }
 
+export interface Embed {
+	colour?: null | string;
+	description?: null | string;
+	icon_url?: null | string;
+	media?: null | string;
+	title?: null | string;
+	url?: null | string;
+}
+
 export interface CountryData {
 	name: {
 		common: string;

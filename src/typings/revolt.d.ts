@@ -6,6 +6,12 @@ declare module "revolt.js" {
 		client: any;
 		loginBot(TOKEN: string): void;
 		on(arg0: string, arg1: (...args: any[]) => any): void;
+		off<T>(
+			event: T,
+			fn?: (arg0: any) => void,
+			context?: any,
+			once?: boolean
+		): Client;
 		user: undefined | User;
 		aliases: any;
 		servers: ServerCollection;

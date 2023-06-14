@@ -1,6 +1,6 @@
 import axios from "axios";
 import https from "https";
-import Client from "revolt.js";
+import Client, { Channel, Message } from "revolt.js";
 
 const deleteElement = <T>(array: T[], element: T): T[] => {
 	const index = array.indexOf(element);
@@ -110,17 +110,16 @@ const nekoapi = async (endpoint: string): Promise<string> => {
 	return res.data.url;
 };
 
-const checkIfImage = (url: string): Promise<boolean> => {
-	return new Promise((resolve, reject) => {
-		https
-			.get(url, (res) => {
-				const contentType = res.headers["content-type"] as string;
-				resolve(contentType.startsWith("image/"));
-			})
-			.on("error", (err) => {
-				reject(err);
-			});
-	});
+const checkIfLink = (url: string): boolean => {
+	const pattern = /^(ftp|http|https):\/\/[^ "]+$/;
+	return pattern.test(url);
+};
+
+const checkIfImage = (url: string): boolean => {
+	const imageUrlPattern = /\.(jpeg|jpg|gif|png|bmp|svg)$/i;
+	const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
+
+	return urlPattern.test(url) && imageUrlPattern.test(url);
 };
 
 const getProgBar = (current: number, max: number, length: number): string => {
@@ -141,6 +140,11 @@ const asyncForEach = async <T>(
 	for (let index = 0; index < array.length; index++) {
 		await callback(array[index], index, array);
 	}
+};
+
+const checkIfHexColor = (color: string): boolean => {
+	const pattern = /^#([0-9A-Fa-f]{3}){1,2}$/i;
+	return pattern.test(color);
 };
 
 const convertToFile = async (client: Client, url: string, filename: string) => {
@@ -178,6 +182,58 @@ const convertToFile = async (client: Client, url: string, filename: string) => {
 	}
 };
 
+const waitForResponse = (
+	client: Client,
+	timeout: number,
+	filter: (response: Message) => boolean
+): Promise<string> => {
+	return new Promise((resolve, reject) => {
+		const messageListener = (response: Message) => {
+			if (filter(response)) {
+				resolve(response.content as string);
+				cleanup();
+			}
+		};
+
+		const timeoutId = setTimeout(() => {
+			reject(new Error("Timeout exceeded"));
+			cleanup();
+		}, timeout);
+
+		const cleanup = () => {
+			clearTimeout(timeoutId);
+			client.off("messageCreate", messageListener);
+		};
+
+		client.on("messageCreate", messageListener);
+	});
+};
+
+const findChannel = (message: Message, input: string) => {
+	const mentionRegex = /^<#(\w+)>$/;
+	const mentionMatch = mentionRegex.exec(input);
+
+	if (mentionMatch) {
+		return message.server?.channels.find(
+			(channel: Channel) => channel.id === mentionMatch[1]
+		);
+	}
+
+	const channelById = message.server?.channelIds.has(input);
+	if (channelById) {
+		return message.server?.channels.find(
+			(channel: Channel) => channel.id === input
+		);
+	}
+
+	const channelByName = message.server?.channels.find(
+		(channel: Channel) => channel.name === input
+	);
+	if (channelByName) return channelByName;
+
+	return undefined;
+};
+
 export {
 	splitMessage,
 	formatDate,
@@ -188,4 +244,8 @@ export {
 	getProgBar,
 	asyncForEach,
 	convertToFile,
+	waitForResponse,
+	findChannel,
+	checkIfLink,
+	checkIfHexColor,
 };
